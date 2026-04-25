@@ -122,3 +122,121 @@ margin:10px 0 5px;
 font-size:14px;
 opacity:0.8;
 }
+/* ===== NAVBAR CINEMATIC ===== */
+.navbar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 50px;
+z-index:1000;
+
+/* GLASS + DARK BLUE */
+background:rgba(0,0,30,0.35);
+backdrop-filter:blur(14px);
+
+/* ánh sáng viền */
+border-bottom:1px solid rgba(100,180,255,0.2);
+}
+
+/* ===== BRAND (TRÁI) ===== */
+.nav-brand{
+font-size:15px;
+font-weight:600;
+letter-spacing:1.5px;
+
+/* gradient text */
+background:linear-gradient(90deg,#ffffff,#66ccff,#ffffff);
+-webkit-background-clip:text;
+color:transparent;
+
+/* glow */
+text-shadow:0 0 15px rgba(0,150,255,0.8);
+}
+
+/* ===== MENU (PHẢI) ===== */
+.nav-menu{
+display:flex;
+gap:25px;
+}
+
+.nav-menu a{
+color:white;
+text-decoration:none;
+font-size:14px;
+position:relative;
+transition:0.3s;
+}
+
+/* HOVER GLOW */
+.nav-menu a:hover{
+color:#66ccff;
+text-shadow:0 0 12px #66ccff;
+}
+
+/* UNDERLINE ANIMATION */
+.nav-menu a::after{
+content:"";
+position:absolute;
+bottom:-6px;
+left:0;
+width:0%;
+height:2px;
+background:linear-gradient(90deg,#66ccff,transparent);
+transition:0.4s;
+}
+.nav-menu a:hover::after{
+width:100%;
+}
+
+/* ===== LIGHT SWEEP EFFECT ===== */
+.navbar::after{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(
+120deg,
+transparent,
+rgba(255,255,255,0.15),
+transparent
+);
+animation:navLight 6s infinite;
+}
+
+@keyframes navLight{
+0%{left:-100%}
+100%{left:100%}
+}
+
+/* ===== SCROLL EFFECT ===== */
+.navbar.scrolled{
+background:rgba(0,0,50,0.7);
+box-shadow:0 0 25px rgba(0,150,255,0.4);
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+
+.navbar{
+flex-direction:column;
+gap:10px;
+padding:12px 15px;
+}
+
+.nav-menu{
+flex-wrap:wrap;
+justify-content:center;
+gap:10px;
+}
+
+.nav-brand{
+font-size:13px;
+text-align:center;
+}
+}
