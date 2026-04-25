@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bình chọn thí sinh</title>
+
+<link rel="stylesheet" href="assets/css/style.css">
+
+<style>
+
+/* SEARCH BAR */
+.search-box{
+max-width:400px;
+margin:20px auto;
+display:flex;
+gap:10px;
+}
+.search-box input{
+flex:1;
+padding:10px;
+border-radius:20px;
+border:none;
+outline:none;
+}
+
+/* TOP */
+.top{
+margin-bottom:40px;
+}
+.top h3{
+margin-bottom:15px;
+color:#66ccff;
+}
+
+/* BADGE */
+.badge{
+position:absolute;
+top:10px;
+left:10px;
+background:#00aaff;
+padding:5px 10px;
+border-radius:10px;
+font-size:12px;
+}
+
+/* CARD FIX */
+.card{
+position:relative;
+text-align:center;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+<a href="index.html">Trang chủ</a>
+<a href="overview.html">Sơ lược</a>
+<a href="review2023.html">2023</a>
+<a href="contest2025.html">2025</a>
+<a href="vote.html">Bình chọn</a>
+</nav>
+
+<section class="hero">
+<h1>BÌNH CHỌN THÍ SINH</h1>
+<p>Hãy bình chọn cho thí sinh bạn yêu thích</p>
+</section>
+
+<!-- SEARCH -->
+<div class="search-box">
+<input type="text" id="search" placeholder="Tìm theo tên hoặc SBD...">
+</div>
+
+<!-- TOP VOTE -->
+<section class="top">
+<h3>🔥 Top thí sinh được bình chọn nhiều nhất</h3>
+<div id="topList" class="grid"></div>
+</section>
+
+<!-- DANH SÁCH -->
+<section>
+<h2>Tất cả thí sinh</h2>
+<div id="list" class="grid"></div>
+</section>
+
+<!-- MODAL -->
+<div id="modal" class="modal"></div>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/vote.js"></script>
+
+<script>
+// DATA 50 thí sinh
+let data=[];
+for(let i=1;i<=50;i++){
+data.push({
+id:i,
+name:"Thí sinh "+i,
+sbd:"SBD "+(100+i),
+img:"https://via.placeholder.com/250x320"
+});
+}
+
+const list=document.getElementById("list");
+const topList=document.getElementById("topList");
+const modal=document.getElementById("modal");
+const search=document.getElementById("search");
+
+// LOAD VOTE
+function getVotes(){
+return JSON.parse(localStorage.getItem("votes")||"{}");
+}
+
+// RENDER
+function render(){
+let votes=getVotes();
+
+let sorted=[...data].sort((a,b)=>(votes[b.id]||0)-(votes[a.id]||0));
+
+/* TOP 3 */
+topList.innerHTML="";
+sorted.slice(0,3).forEach((c,i)=>{
+let div=document.createElement("div");
+div.className="card";
+
+div.innerHTML=`
+<div class="badge">TOP ${i+1}</div>
+<img src="${c.img}">
+<h3>${c.name}</h3>
+<p>${c.sbd}</p>
+<p>❤️ ${votes[c.id]||0}</p>
+<button onclick="vote(${c.id})">Vote</button>
+`;
+
+topList.appendChild(div);
+});
+
+/* LIST */
+list.innerHTML="";
+data.forEach(c=>{
+let div=document.createElement("div");
+div.className="card";
+
+div.innerHTML=`
+<img src="${c.img}">
+<h3>${c.name}</h3>
+<p>${c.sbd}</p>
+<p>❤️ ${votes[c.id]||0}</p>
+<button onclick="vote(${c.id});event.stopPropagation()">Vote</button>
+`;
+
+div.onclick=()=>showDetail(c);
+
+list.appendChild(div);
+});
+}
+
+// MODAL
+function showDetail(c){
+modal.style.display="flex";
+
+modal.innerHTML=`
+<div class="modal-content">
+<img src="${c.img}" style="width:100%">
+<h2>${c.name}</h2>
+<p>${c.sbd}</p>
+<p>Thí sinh năng động, tự tin, đại diện cho thế hệ sinh viên hiện đại.</p>
+<button onclick="vote(${c.id})">Bình chọn</button>
+</div>
+`;
+
+modal.onclick=()=>modal.style.display="none";
+}
+
+// SEARCH
+search.addEventListener("input",()=>{
+let value=search.value.toLowerCase();
+
+let filtered=data.filter(c=>
+c.name.toLowerCase().includes(value) ||
+c.sbd.toLowerCase().includes(value)
+);
+
+list.innerHTML="";
+filtered.forEach(c=>{
+let div=document.createElement("div");
+div.className="card";
+
+div.innerHTML=`
+<img src="${c.img}">
+<h3>${c.name}</h3>
+<p>${c.sbd}</p>
+<button onclick="vote(${c.id})">Vote</button>
+`;
+
+list.appendChild(div);
+});
+});
+
+render();
+</script>
+
+</body>
+</html>
