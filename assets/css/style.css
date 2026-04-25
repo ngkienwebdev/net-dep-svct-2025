@@ -1,0 +1,94 @@
+body{
+    margin:0;
+    font-family:'Montserrat',sans-serif;
+    background:black;
+    color:white;
+}
+
+/* VIDEO BG */
+#videoBG{
+    position:fixed;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-2;
+}
+
+.overlay{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    z-index:-1;
+}
+
+/* NAV */
+nav{
+    position:fixed;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    padding:20px 40px;
+    backdrop-filter:blur(10px);
+    z-index:100;
+}
+
+nav a{
+    color:white;
+    margin:0 10px;
+    text-decoration:none;
+}
+
+nav a:hover{color:gold}
+
+/* HERO */
+.hero{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:64px;
+    color:gold;
+    text-shadow:0 0 30px gold;
+}
+
+/* SECTION */
+section{
+    padding:120px 10%;
+}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+/* CARD */
+.card{
+    background:rgba(255,255,255,0.05);
+    padding:25px;
+    border-radius:12px;
+    transition:0.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px) scale(1.05);
+    box-shadow:0 0 30px gold;
+}
+
+/* BUTTON */
+.btn{
+    border:1px solid gold;
+    padding:12px 30px;
+    color:gold;
+}
+.btn:hover{
+    background:gold;
+    color:black;
+}
