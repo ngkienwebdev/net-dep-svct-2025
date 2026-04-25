@@ -1,25 +1,23 @@
-// SCROLL
-const obs=new IntersectionObserver(e=>{
-e.forEach(x=>{if(x.isIntersecting)x.target.classList.add("show")})
-});
-document.querySelectorAll("section").forEach(el=>obs.observe(el));
+// SCROLL ANIMATION
+const elements=document.querySelectorAll(".fade");
 
-// CURSOR EFFECT
-const cursor=document.createElement("div");
-cursor.className="cursor";
-document.body.appendChild(cursor);
-
-document.addEventListener("mousemove",e=>{
-cursor.style.left=e.clientX+"px";
-cursor.style.top=e.clientY+"px";
+function show(){
+elements.forEach(el=>{
+const top=el.getBoundingClientRect().top;
+if(top<window.innerHeight-100){
+el.classList.add("show");
+}
 });
-// NAV SCROLL EFFECT
+}
+window.addEventListener("scroll",show);
+show();
+
+// NAV SCROLL
 window.addEventListener("scroll",()=>{
 const nav=document.querySelector(".navbar");
-
 if(window.scrollY>50){
-nav.classList.add("scrolled");
+nav.style.background="rgba(0,0,50,0.8)";
 }else{
-nav.classList.remove("scrolled");
+nav.style.background="rgba(0,0,30,0.4)";
 }
 });
